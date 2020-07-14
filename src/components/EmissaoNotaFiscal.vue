@@ -14,7 +14,7 @@
         <b-form>
           <b-form-group label="" label-for="input-3">
             <b-form-select
-              v-model="selecaoProduto"
+              v-model="produto"
               :options="produtos"
               value-field="value"
               text-field="text"
@@ -26,7 +26,7 @@
           <b-button
             variant="primary"
             size="sm"
-            @click.stop.prevent="adicionarProduto(selecaoProduto)"
+            @click.stop.prevent="adicionarProduto(produto)"
             >Adicionar na nota fiscal</b-button
           >
         </b-form>
@@ -72,43 +72,27 @@
 </template>
 
 <script>
-import apiProduto from "../api/produto";
+import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
   data() {
     return {
-      mensagemErro: "",
-      produtos: [],
-      itensNotaFiscal: [],
-      selecaoProduto: null,
+      produto: null,
     };
   },
 
   methods: {
-    adicionarProduto(produto) {
-      
-      if (produto == null) {
-        this.mensagemErro = "Selecione um produto valido para adicionar na nota";
-        return;
-      }
+    ...mapActions(["adicionarProduto", "removerProduto"]),
+  },
 
-      this.itensNotaFiscal.push(produto);
-    },
-    removerProduto(index) {
-      this.itensNotaFiscal.splice(index, 1);
-    },
+  computed: {
+    ...mapState(["mensagemErro", "produtos", "itensNotaFiscal"]),
   },
 
   watch: {
-    selecaoProduto(newValue) {
-      if ((newValue =! null)) {
-        this.mensagemErro = "";
-      }
-    },
+    ...mapActions(["produto"]),
   },
 
-  created() {
-    this.produtos = apiProduto.getProdutos();
-  },
+  created() {},
 };
 </script>
