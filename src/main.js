@@ -22,6 +22,21 @@ const store = new Vuex.Store({
 	},
 	mutations: {
 
+		adicionarProduto(state, payload) {
+			const { produto } = payload;
+
+			if (produto == null) {
+				state.mensagemErro = "Selecione um produto valido para adicionar na nota";
+				return false
+			}
+
+			state.itensNotaFiscal.push(produto);
+		},
+		removerProduto(state, payload) {
+
+			const { index } = payload;
+			state.itensNotaFiscal.splice(index, 1);
+		}
 	},
 	getters: {
 	},
@@ -37,19 +52,14 @@ const store = new Vuex.Store({
 		async adicionarProduto(context, payload) {
 			const produto = payload;
 
-			if (produto == null) {
-				context.state.mensagemErro = "Selecione um produto valido para adicionar na nota";
-				return;
-			}
-
-			context.state.itensNotaFiscal.push(produto);
+			context.commit("adicionarProduto", { produto });
 
 		},
 
 		async removerProduto(context, payload) {
 			const index = payload;
 
-			context.state.itensNotaFiscal.splice(index, 1);
+			context.commit("removerProduto", { index });
 
 		},
 
