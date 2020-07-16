@@ -38,9 +38,7 @@ const store = new Vuex.Store({
 			state.itensNotaFiscal.splice(index, 1);
 		}
 	},
-	getters: {
-	},
-
+	
 	actions: {
 
 		async getProdutos(context, payload) {

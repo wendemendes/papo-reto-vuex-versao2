@@ -91,8 +91,6 @@ export default {
 
   watch: {
     ...mapActions(["produto"]),
-  },
-
-  created() {},
+  }
 };
 </script>
